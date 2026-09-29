@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -31,7 +32,7 @@
             background-color: var(--bg-light);
             color: var(--text-color);
             line-height: 1.6;
-            padding-top: 80px; /* مسافة للهيدر الثابت */
+            padding-top: 80px;
         }
 
         a {
@@ -94,7 +95,6 @@
             color: var(--secondary-color);
         }
 
-        /* زر القائمة للشاشات الصغيرة */
         .menu-toggle {
             display: none;
             font-size: 1.5rem;
@@ -148,7 +148,6 @@
         }
 
         .contact-form input, 
-        .contact-form select, 
         .contact-form textarea {
             width: 100%;
             padding: 12px 15px;
@@ -161,7 +160,6 @@
         }
 
         .contact-form input:focus, 
-        .contact-form select:focus, 
         .contact-form textarea:focus {
             border-color: var(--secondary-color);
         }
@@ -171,11 +169,44 @@
             resize: vertical;
         }
 
+        /* --- خيار تضمين المرفقات --- */
+        .attach-option-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background-color: #f1f5f9;
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            cursor: pointer;
+        }
+
+        .attach-option-container input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .attach-option-container label {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--primary-color);
+            cursor: pointer;
+        }
+
         /* --- تخصيص حقول رفع الملفات --- */
         .file-upload-wrapper {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 15px;
+            opacity: 0.5;
+            pointer-events: none;
+            transition: var(--transition);
+        }
+
+        .file-upload-wrapper.active {
+            opacity: 1;
+            pointer-events: auto;
         }
 
         @media (max-width: 576px) {
@@ -243,6 +274,7 @@
             cursor: pointer;
             transition: var(--transition);
             width: 100%;
+            margin-top: 10px;
         }
 
         .contact-form button[type="submit"]:hover {
@@ -321,7 +353,6 @@
             font-size: 0.9rem;
         }
 
-        /* --- تجاوب الشاشات الصغيرة (Mobile Responsive) --- */
         @media (max-width: 768px) {
             .logo {
                 font-size: 1.1rem;
@@ -339,7 +370,7 @@
                 align-items: flex-start;
                 padding: 20px;
                 box-shadow: 0 10px 15px rgba(0,0,0,0.1);
-                display: none; /* مخفية افتراضياً وتظهر عند الضغط */
+                display: none;
             }
             .nav-links.active {
                 display: flex;
@@ -406,32 +437,19 @@
             <div class="form-group">
                 <input type="text" name="الاسم الكامل" placeholder="الاسم الكامل" required>
             </div>
-            
-            <div class="form-group">
-                <select name="المشكلة" required>
-                    <option value="" disabled selected>اختار نوع تواصلك</option>
-                    <option value="فتح حساب او كاش">تصوير مستند قديم وجعله يبدو بدقة فائقة الوضوح</option> 
-                    <option value="امرا اخر">كتابة امتحان وطباعته</option>
-                    <option value="برمجة شبكات الواي فاي">تصميم الإعلانات وكتابة كروت المرطبات</option>
-                    <option value="ربط أنتينا">استخراج ملفات من الهاتف</option>
-                    <option value="ربط أنتينا">CV كتابة الـ</option>
-                    <option value="استضافة لموقع إنتيرنيتي">استضافة لموقع إلكتروني</option>
-                    <option value="تم قفل حسابي علي فيسبوك">تم قفل حسابي علي فيسبوك</option>
-                    <option value="تأمين حساب فايسبوك">تأمين حساب فيسبوك</option>
-                    <option value="شراكة تقنية">تصوير مستند قديم موجود بالهاتف وجعله اوضح</option>
-                    <option value="تأكيد حساب الفيسبوك">تأكيد حساب فيسبوك بالبطاقة القومية</option>
-                    <option value="فتح حسابات تواصل">فتح حساب (واتساب/تويتر/انستغرام)</option>
-                    <option value="فتح حساب بنكك">فتح حساب بنكك</option>
-                    <option value="فتح محفظة الكترونية">فتح محفظة الكترونية</option>
-                </select>
+
+            <!-- خيار تفعيل المرفقات -->
+            <div class="attach-option-container">
+                <input type="checkbox" id="enableFilesToggle">
+                <label for="enableFilesToggle">أرغب في إرفاق ملف PDF أو صورة مع الطلب</label>
             </div>
 
             <!-- حقول إرفاق ملف PDF وصورة -->
             <div class="form-group">
-                <div class="file-upload-wrapper">
+                <div class="file-upload-wrapper" id="fileWrapper">
                     <!-- حقل إرفاق PDF -->
                     <div class="file-upload-box">
-                        <input type="file" name="ملف_PDF" accept=".pdf" id="pdfInput">
+                        <input type="file" name="ملف_PDF" accept=".pdf" id="pdfInput" disabled>
                         <div class="file-upload-label">
                             <i class="fa-solid fa-file-pdf"></i>
                             <span>إرفاق ملف PDF</span>
@@ -440,7 +458,7 @@
                     </div>
                     <!-- حقل إرفاق صورة -->
                     <div class="file-upload-box">
-                        <input type="file" name="ملف_صورة" accept="image/*" id="imageInput">
+                        <input type="file" name="ملف_صورة" accept="image/*" id="imageInput" disabled>
                         <div class="file-upload-label">
                             <i class="fa-solid fa-image"></i>
                             <span>إرفاق صورة من الجهاز</span>
@@ -453,7 +471,8 @@
             <div class="form-group">
                 <textarea name="الرسالة" placeholder="اكتب رسالتك داخل المستطيل..." required></textarea>
             </div>
-            <button type="submit">إرسال البيانات</button>
+
+            <button type="submit" id="submitBtn">إرسال البيانات</button>
         </form>
     </div>
 
@@ -490,21 +509,9 @@
         </div>
     </footer>
 
-    <!-- سكربت لتشغيل قائمة الهواتف وعرض أسماء الملفات المختارة -->
     <script>
-        // ضبط رابط العودة تلقائياً لرابط الصفحة الحالية وتجهيز الملفات غير المرفقة
+        // ضبط رابط العودة تلقائياً لرابط الصفحة الحالية
         document.getElementById('next-url').value = window.location.href;
-
-        const contactForm = document.getElementById('contactForm');
-        contactForm.addEventListener('submit', function() {
-            // تعطيل الحقول الفارغة عند الإرسال لمنع سيرفر FormSubmit من إرجاع خطأ 500
-            if (!pdfInput.files || pdfInput.files.length === 0) {
-                pdfInput.disabled = true;
-            }
-            if (!imageInput.files || imageInput.files.length === 0) {
-                imageInput.disabled = true;
-            }
-        });
 
         // زر القائمة المنسدلة للهواتف
         const menuToggle = document.getElementById('menuToggle');
@@ -514,8 +521,30 @@
             navLinks.classList.toggle('active');
         });
 
-        // تحديث اسم ملف الـ PDF عند الاختيار
+        // التحكم في خيار تفعيل وإتاحة رفع الملفات
+        const enableFilesToggle = document.getElementById('enableFilesToggle');
+        const fileWrapper = document.getElementById('fileWrapper');
         const pdfInput = document.getElementById('pdfInput');
+        const imageInput = document.getElementById('imageInput');
+
+        enableFilesToggle.addEventListener('change', function() {
+            if (this.checked) {
+                fileWrapper.classList.add('active');
+                pdfInput.disabled = false;
+                imageInput.disabled = false;
+            } else {
+                fileWrapper.classList.remove('active');
+                pdfInput.disabled = true;
+                imageInput.disabled = true;
+                // إعادة تعيين الحقول عند الإلغاء
+                pdfInput.value = '';
+                imageInput.value = '';
+                pdfName.textContent = 'لم يتم اختيار ملف';
+                imageName.textContent = 'لم يتم اختيار صورة';
+            }
+        });
+
+        // تحديث اسم ملف الـ PDF عند الاختيار
         const pdfName = document.getElementById('pdfName');
         pdfInput.addEventListener('change', function() {
             if (this.files && this.files[0]) {
@@ -526,7 +555,6 @@
         });
 
         // تحديث اسم الصورة عند الاختيار
-        const imageInput = document.getElementById('imageInput');
         const imageName = document.getElementById('imageName');
         imageInput.addEventListener('change', function() {
             if (this.files && this.files[0]) {
@@ -534,16 +562,6 @@
             } else {
                 imageName.textContent = 'لم يتم اختيار صورة';
             }
-        });
-
-        // تفعيل أزرار الفلترة (إن وجدت)
-        const filterBtns = document.querySelectorAll('.filter-btn');
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const activeBtn = document.querySelector('.filter-btn.active');
-                if(activeBtn) activeBtn.classList.remove('active');
-                btn.classList.add('active');
-            });
         });
     </script>
 </body>
