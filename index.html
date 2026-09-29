@@ -399,7 +399,7 @@
 
     <!-- قسم التواصل ونموذج الإرسال -->
     <div class="contact-container" id="contact">
-        <form class="contact-form" action="https://formsubmit.co/alshftmhmwd9@gmail.com" method="post" enctype="multipart/form-data">
+        <form class="contact-form" id="contactForm" action="https://formsubmit.co/alshftmhmwd9@gmail.com" method="post" enctype="multipart/form-data">
             <input type="hidden" name="_next" id="next-url" value="">
             <input type="hidden" name="_captcha" value="false">
             
@@ -492,6 +492,20 @@
 
     <!-- سكربت لتشغيل قائمة الهواتف وعرض أسماء الملفات المختارة -->
     <script>
+        // ضبط رابط العودة تلقائياً لرابط الصفحة الحالية وتجهيز الملفات غير المرفقة
+        document.getElementById('next-url').value = window.location.href;
+
+        const contactForm = document.getElementById('contactForm');
+        contactForm.addEventListener('submit', function() {
+            // تعطيل الحقول الفارغة عند الإرسال لمنع سيرفر FormSubmit من إرجاع خطأ 500
+            if (!pdfInput.files || pdfInput.files.length === 0) {
+                pdfInput.disabled = true;
+            }
+            if (!imageInput.files || imageInput.files.length === 0) {
+                imageInput.disabled = true;
+            }
+        });
+
         // زر القائمة المنسدلة للهواتف
         const menuToggle = document.getElementById('menuToggle');
         const navLinks = document.getElementById('navLinks');
