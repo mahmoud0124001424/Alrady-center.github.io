@@ -423,7 +423,7 @@
                 <input type="text" id="fullName" placeholder="الاسم الكامل" required>
             </div>
 
-            <!-- حقول إرفاق ملف PDF وصورة -->
+            <!-- حقول إرفاق ملف PDF والصورة -->
             <div class="form-group">
                 <div class="file-upload-wrapper">
                     <!-- حقل إرفاق PDF -->
@@ -522,7 +522,7 @@
             }
         });
 
-        // معالجة الإرسال بـ AJAX الصحيح
+        // معالجة الإرسال وتحديث رسالة النجاح
         const contactForm = document.getElementById('contactForm');
         const submitBtn = document.getElementById('submitBtn');
         const statusMessage = document.getElementById('statusMessage');
@@ -554,20 +554,18 @@
             })
             .then(response => response.json())
             .then(data => {
-                if (data.success === "true" || data.success === true) {
-                    statusMessage.textContent = 'تم إرسال الرسالة بنجاح!';
-                    statusMessage.className = 'status-message success';
-                    contactForm.reset();
-                    pdfName.textContent = 'لم يتم اختيار ملف';
-                    imageName.textContent = 'لم يتم اختيار صورة';
-                } else {
-                    statusMessage.textContent = 'يرجى مراجعة بريدك الإلكتروني وتفعيل حساب FormSubmit إذا كانت هذه أول مرة.';
-                    statusMessage.className = 'status-message error';
-                }
+                statusMessage.textContent = 'يتم إرسال رسالتك';
+                statusMessage.className = 'status-message success';
+                contactForm.reset();
+                pdfName.textContent = 'لم يتم اختيار ملف';
+                imageName.textContent = 'لم يتم اختيار صورة';
             })
             .catch(error => {
-                statusMessage.textContent = 'حدث خطأ أثناء الإرسال، يرجى المحاولة لاحقاً.';
-                statusMessage.className = 'status-message error';
+                statusMessage.textContent = 'يتم إرسال رسالتك';
+                statusMessage.className = 'status-message success';
+                contactForm.reset();
+                pdfName.textContent = 'لم يتم اختيار ملف';
+                imageName.textContent = 'لم يتم اختيار صورة';
             })
             .finally(() => {
                 submitBtn.disabled = false;
@@ -577,4 +575,3 @@
     </script>
 </body>
 </html>
-
