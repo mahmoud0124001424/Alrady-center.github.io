@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -147,6 +148,7 @@
         }
 
         .contact-form input[type="text"], 
+        .contact-form select,
         .contact-form textarea {
             width: 100%;
             padding: 12px 15px;
@@ -159,6 +161,7 @@
         }
 
         .contact-form input[type="text"]:focus, 
+        .contact-form select:focus,
         .contact-form textarea:focus {
             border-color: var(--secondary-color);
         }
@@ -166,67 +169,6 @@
         .contact-form textarea {
             height: 120px;
             resize: vertical;
-        }
-
-        /* --- تخصيص حقول رفع الملفات --- */
-        .file-upload-wrapper {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-
-        @media (max-width: 576px) {
-            .file-upload-wrapper {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .file-upload-box {
-            position: relative;
-            border: 2px dashed #cbd5e1;
-            border-radius: 8px;
-            padding: 15px;
-            text-align: center;
-            background-color: #fafafa;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .file-upload-box:hover {
-            border-color: var(--secondary-color);
-            background-color: #fffaf0;
-        }
-
-        .file-upload-box input[type="file"] {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            cursor: pointer;
-        }
-
-        .file-upload-label {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 6px;
-            color: #555;
-            font-size: 0.9rem;
-            font-weight: 600;
-        }
-
-        .file-upload-label i {
-            font-size: 1.5rem;
-            color: var(--secondary-color);
-        }
-
-        .file-name-display {
-            font-size: 0.8rem;
-            color: #27ae60;
-            margin-top: 4px;
-            word-break: break-all;
         }
 
         .contact-form button[type="submit"] {
@@ -419,38 +361,29 @@
     <!-- قسم التواصل ونموذج الإرسال -->
     <div class="contact-container" id="contact">
         <form class="contact-form" id="contactForm">
+            <!-- 1. كتابة الاسم أولاً -->
             <div class="form-group">
-                <input type="text" id="fullName" placeholder="الاسم الكامل" required>
+                <input type="text" id="fullName" name="الاسم الكامل" placeholder="الاسم الكامل" required>
             </div>
 
-            <!-- حقول إرفاق ملف PDF والصورة -->
+            <!-- 2. التحديد في قائمة خيارات -->
             <div class="form-group">
-                <div class="file-upload-wrapper">
-                    <!-- حقل إرفاق PDF -->
-                    <div class="file-upload-box">
-                        <input type="file" accept=".pdf" id="pdfInput">
-                        <div class="file-upload-label">
-                            <i class="fa-solid fa-file-pdf"></i>
-                            <span>إرفاق ملف PDF (اختياري)</span>
-                            <span class="file-name-display" id="pdfName">لم يتم اختيار ملف</span>
-                        </div>
-                    </div>
-                    <!-- حقل إرفاق صورة -->
-                    <div class="file-upload-box">
-                        <input type="file" accept="image/*" id="imageInput">
-                        <div class="file-upload-label">
-                            <i class="fa-solid fa-image"></i>
-                            <span>إرفاق صورة (اختياري)</span>
-                            <span class="file-name-display" id="imageName">لم يتم اختيار صورة</span>
-                        </div>
-                    </div>
-                </div>
+                <select id="serviceType" name="نوع الخدمة" required>
+                    <option value="" disabled selected>-- حدد نوع الخدمة المطلوبة --</option>
+                    <option value="طباعة مستندات">طباعة مستندات</option>
+                    <option value="تصوير مستندات">تصوير مستندات</option>
+                    <option value="كتابة بحوث طلابية">كتابة بحوث طلابية</option>
+                    <option value="طباعة وتجهيز امتحانات">طباعة وتجهيز امتحانات</option>
+                    <option value="استفسار عام">استفسار عام</option>
+                </select>
             </div>
 
+            <!-- 3. كتابة الرسالة -->
             <div class="form-group">
-                <textarea id="message" placeholder="اكتب رسالتك داخل المستطيل..." required></textarea>
+                <textarea id="message" name="الرسالة" placeholder="اكتب تفاصيل رسالتك هنا..." required></textarea>
             </div>
 
+            <!-- 4. زر إرسال البيانات -->
             <button type="submit" id="submitBtn">إرسال البيانات</button>
             <div id="statusMessage" class="status-message"></div>
         </form>
@@ -500,29 +433,7 @@
             });
         }
 
-        // تحديث اسم ملف الـ PDF عند الاختيار
-        const pdfInput = document.getElementById('pdfInput');
-        const pdfName = document.getElementById('pdfName');
-        pdfInput.addEventListener('change', function() {
-            if (this.files && this.files[0]) {
-                pdfName.textContent = this.files[0].name;
-            } else {
-                pdfName.textContent = 'لم يتم اختيار ملف';
-            }
-        });
-
-        // تحديث اسم الصورة عند الاختيار
-        const imageInput = document.getElementById('imageInput');
-        const imageName = document.getElementById('imageName');
-        imageInput.addEventListener('change', function() {
-            if (this.files && this.files[0]) {
-                imageName.textContent = this.files[0].name;
-            } else {
-                imageName.textContent = 'لم يتم اختيار صورة';
-            }
-        });
-
-        // معالجة الإرسال وتحديث رسالة النجاح
+        // معالجة الإرسال عبر FormSubmit بالطريقة البسيطة والفعالة
         const contactForm = document.getElementById('contactForm');
         const submitBtn = document.getElementById('submitBtn');
         const statusMessage = document.getElementById('statusMessage');
@@ -535,37 +446,32 @@
             statusMessage.className = 'status-message';
             statusMessage.style.display = 'none';
 
-            // تجهيز البيانات كـ FormData لإرسال الملفات والبيانات معاً
-            const formData = new FormData();
-            formData.append('الاسم الكامل', document.getElementById('fullName').value);
-            formData.append('الرسالة', document.getElementById('message').value);
-            formData.append('_captcha', 'false');
-
-            if (pdfInput.files[0]) {
-                formData.append('ملف PDF', pdfInput.files[0]);
-            }
-            if (imageInput.files[0]) {
-                formData.append('صورة مرفقة', imageInput.files[0]);
-            }
+            // تجهيز البيانات العادية للنظام
+            const formData = {
+                "الاسم الكامل": document.getElementById('fullName').value,
+                "نوع الخدمة": document.getElementById('serviceType').value,
+                "الرسالة": document.getElementById('message').value,
+                "_captcha": "false"
+            };
 
             fetch("https://formsubmit.co/ajax/alshftmhmwd9@gmail.com", {
                 method: "POST",
-                body: formData
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(formData)
             })
             .then(response => response.json())
             .then(data => {
                 statusMessage.textContent = 'يتم إرسال رسالتك';
                 statusMessage.className = 'status-message success';
                 contactForm.reset();
-                pdfName.textContent = 'لم يتم اختيار ملف';
-                imageName.textContent = 'لم يتم اختيار صورة';
             })
             .catch(error => {
                 statusMessage.textContent = 'يتم إرسال رسالتك';
                 statusMessage.className = 'status-message success';
                 contactForm.reset();
-                pdfName.textContent = 'لم يتم اختيار ملف';
-                imageName.textContent = 'لم يتم اختيار صورة';
             })
             .finally(() => {
                 submitBtn.disabled = false;
