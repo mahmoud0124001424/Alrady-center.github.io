@@ -99,7 +99,7 @@
             border: 1px solid rgba(230, 126, 34, 0.4);
         }
 
-        /* --- قسم الإحصائيات والمميزات --- */
+        /* --- قسم المميزات والإحصائيات --- */
         .stats-section {
             background-color: var(--white);
             padding: 50px 20px;
@@ -236,8 +236,7 @@
 
         .contact-form input[type="text"], 
         .contact-form select,
-        .contact-form textarea,
-        .contact-form input[type="file"] {
+        .contact-form textarea {
             width: 100%;
             padding: 12px 15px;
             border: 1px solid #ddd;
@@ -250,8 +249,7 @@
 
         .contact-form input[type="text"]:focus, 
         .contact-form select:focus,
-        .contact-form textarea:focus,
-        .contact-form input[type="file"]:focus {
+        .contact-form textarea:focus {
             border-color: var(--secondary-color);
             box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.15);
         }
@@ -261,7 +259,14 @@
             resize: vertical;
         }
 
-        .file-upload-box {
+        /* أزرار خيارات رفع الملفات والكاميرا بشكل احترافي وعصري */
+        .upload-options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .upload-card {
             border: 2px dashed #cbd5e1;
             padding: 15px;
             border-radius: 10px;
@@ -271,9 +276,29 @@
             transition: var(--transition);
         }
 
-        .file-upload-box:hover {
+        .upload-card:hover {
             border-color: var(--secondary-color);
             background: #fff8f0;
+        }
+
+        .upload-card i {
+            font-size: 1.6rem;
+            color: var(--secondary-color);
+            margin-bottom: 6px;
+        }
+
+        .upload-card p {
+            font-size: 0.85rem;
+            color: #444;
+            font-weight: 600;
+        }
+
+        .selected-file-info {
+            margin-top: 8px;
+            font-size: 0.85rem;
+            color: #27ae60;
+            font-weight: 700;
+            word-break: break-all;
         }
 
         .contact-form button[type="submit"] {
@@ -288,6 +313,7 @@
             transition: var(--transition);
             width: 100%;
             box-shadow: 0 4px 12px rgba(230, 126, 34, 0.3);
+            margin-top: 10px;
         }
 
         .contact-form button[type="submit"]:hover {
@@ -403,7 +429,6 @@
             font-size: 0.9rem;
         }
 
-        /* التجاوب مع الهواتف والشاشات المختلفة */
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 2rem;
@@ -412,12 +437,15 @@
                 margin: 0 15px 40px 15px;
                 padding: 25px 20px;
             }
+            .upload-options-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- واجهة ترحيب عصرية بديلة لشريط التنقل المحذوف -->
+    <!-- واجهة ترحيب عصرية -->
     <section class="hero">
         <div class="hero-content">
             <span class="hero-badge"><i class="fa-solid fa-star"></i> مرحباً بكم في وجهتكم الاحترافية</span>
@@ -483,7 +511,9 @@
     <!-- قسم التواصل ونموذج الطلب والخدمات -->
     <div class="contact-container" id="contact">
         <h2 style="text-align: center; margin-bottom: 25px; color: var(--primary-color);">طلب خدمة أو استفسار</h2>
+        
         <form class="contact-form" id="contactForm">
+            
             <!-- 1. الاسم الكامل -->
             <div class="form-group">
                 <label for="fullName">الاسم الكامل</label>
@@ -509,20 +539,32 @@
                 <textarea id="message" name="الرسالة" placeholder="اكتب تفاصيل طلبك هنا..." required></textarea>
             </div>
 
-            <!-- 4. إرفاق ملف أو التقاط صورة اختياري -->
+            <!-- 4. خيارات رفع ملف PDF أو التقاط صورة / اختيار صورة من الهاتف -->
             <div class="form-group">
-                <label for="attachmentFile">إرفاق ملف أو التقاط صورة (اختياري)</label>
-                <div class="file-upload-box" onclick="document.getElementById('attachmentFile').click();">
-                    <i class="fa-solid fa-cloud-arrow-up" style="font-size: 1.5rem; color: var(--secondary-color); margin-bottom: 5px;"></i>
-                    <p style="font-size: 0.9rem; color: #555;">انقر لاختيار ملف أو صورة مستند</p>
-                    <input type="file" id="attachmentFile" name="الملف المرفق" accept="image/*,.pdf,.doc,.docx" style="display: none;">
+                <label>إرفاق مستند (اختياري)</label>
+                <div class="upload-options-grid">
+                    <!-- زر اختيار ملف PDF أو مستند -->
+                    <div class="upload-card" onclick="document.getElementById('pdfFileInput').click();">
+                        <i class="fa-solid fa-file-pdf"></i>
+                        <p>اختيار ملف PDF</p>
+                        <input type="file" id="pdfFileInput" name="ملف_PDF_المرفق" accept=".pdf,.doc,.docx" style="display: none;">
+                    </div>
+
+                    <!-- زر التقاط صورة أو اختيار صورة -->
+                    <div class="upload-card" onclick="document.getElementById('imageFileInput').click();">
+                        <i class="fa-solid fa-camera"></i>
+                        <p>التقاط أو اختيار صورة</p>
+                        <input type="file" id="imageFileInput" name="الصورة_المرفقة" accept="image/*" capture="environment" style="display: none;">
+                    </div>
                 </div>
+                <!-- مكان لعرض اسم الملف أو الصورة المحددة -->
+                <div id="fileSelectionStatus" class="selected-file-info"></div>
             </div>
 
             <!-- 5. زر الإرسال -->
             <button type="submit" id="submitBtn">إرسال البيانات</button>
             
-            <!-- رسالة النجاح مع الشعار المتوهج -->
+            <!-- رسالة النجاح مع الشعار المتوهج المطلوبة -->
             <div id="statusMessage" class="status-message">
                 <i class="fa-solid fa-circle-check"></i>
                 نشكر تواصلكم، سيتم تجهيز طلبكم الآن وسنرد عليكم قريباً
@@ -561,56 +603,23 @@
     </footer>
 
     <script>
-        // معالجة نموذج الإرسال مع عرض رسالة النجاح والشعار المتوهج
-        const contactForm = document.getElementById('contactForm');
-        const submitBtn = document.getElementById('submitBtn');
-        const statusMessage = document.getElementById('statusMessage');
+        // إظهار اسم الملف أو الصورة التي قام المستخدم برفعها
+        const pdfInput = document.getElementById('pdfFileInput');
+        const imageInput = document.getElementById('imageFileInput');
+        const fileStatus = document.getElementById('fileSelectionStatus');
 
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'جاري الإرسال...';
-            statusMessage.style.display = 'none';
-
-            // تجهيز البيانات
-            const formData = {
-                "الاسم الكامل": document.getElementById('fullName').value,
-                "نوع الخدمة": document.getElementById('serviceType').value,
-                "الرسالة": document.getElementById('message').value,
-                "_captcha": "false"
-            };
-
-            // إرسال البيانات عبر FormSubmit مع التعامل مع الاستجابة أو الخطأ بسلاسة
-            fetch("https://formsubmit.co/ajax/alshftmhmwd9@gmail.com", {
-                method: "POST",
-                headers: { 
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            })
-            .then(response => response.json())
-            .then(data => {
-                showSuccessMessage();
-            })
-            .catch(error => {
-                showSuccessMessage(); // حتى لو حدث خطأ في الاتصال نظهر رسالة النجاح للعميل لضمان تجربة مستخدم ممتازة
-            });
+        pdfInput.addEventListener('change', function() {
+            if (this.files && this.files.length > 0) {
+                fileStatus.textContent = 'تم إرفاق ملف PDF: ' + this.files[0].name;
+                imageInput.value = ''; // تفريغ الحقل الآخر لضمان عدم التعارض
+            }
         });
 
-        function showSuccessMessage() {
-            statusMessage.className = 'status-message success';
-            statusMessage.style.display = 'block';
-            contactForm.reset();
-            submitBtn.disabled = false;
-            submitBtn.textContent = 'إرسال البيانات';
-            
-            // إخفاء الرسالة تلقائياً بعد 8 ثوانٍ
-            setTimeout(() => {
-                statusMessage.style.display = 'none';
-            }, 8000);
-        }
-    </script>
-</body>
-</html>
+        imageInput.addEventListener('change', function() {
+            if (this.files && this.files.length > 0) {
+                fileStatus.textContent = 'تم إرفاق الصورة: ' + this.files[0].name;
+                pdfInput.value = ''; // تفريغ الحقل الآخر
+            }
+        });
+
+        // إرسال البيانات والملفات مباشرة للبريد الإلكتروني 
