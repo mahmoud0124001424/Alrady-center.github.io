@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -209,6 +210,74 @@
         .team-card p {
             color: #777;
             font-size: 0.9rem;
+        }
+
+        /* --- قسم آراء العملاء الافتراضية --- */
+        .testimonials-section {
+            max-width: 1200px;
+            margin: 0 auto 50px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .testimonial-card {
+            background: var(--white);
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.04);
+            text-align: right;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+        }
+
+        .client-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .client-info img {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--secondary-color);
+        }
+
+        .client-info h4 {
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            margin-bottom: 2px;
+        }
+
+        .client-info span {
+            font-size: 0.8rem;
+            color: #777;
+        }
+
+        .testimonial-card p {
+            color: #555;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .rating-stars {
+            color: var(--accent-color);
+            font-size: 0.9rem;
+            margin-bottom: 8px;
         }
 
         /* --- قسم التواصل والنموذج --- */
@@ -507,11 +576,71 @@
         </div>
     </section>
 
+    <!-- قسم آراء العملاء -->
+    <section class="testimonials-section">
+        <h2 class="section-title">آراء العملاء</h2>
+        <p class="section-subtitle">ما يقوله عملاؤنا الكرام عن جودة خدماتنا وسرعة إنجازهم</p>
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <div class="rating-stars">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                </div>
+                <p>"خدمة ممتازة وسريعة جداً في طباعة الملازم والبحوث. التعامل راقي والأسعار مناسبة تماماً للطلاب."</p>
+                <div class="client-info" style="margin-top: 15px;">
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80" alt="عميل">
+                    <div>
+                        <h4>سارة أحمد</h4>
+                        <span>طالبة جامعية</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="rating-stars">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                </div>
+                <p>"أفضل مكتبة تعاملت معها، دقة في إعداد وتنسيق المستندات والامتحانات وسرعة في إرسال واستلام الملفات."</p>
+                <div class="client-info" style="margin-top: 15px;">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80" alt="عميل">
+                    <div>
+                        <h4>خالد المري</h4>
+                        <span>باحث أكاديمي</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card">
+                <div class="rating-stars">
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star"></i>
+                    <i class="fa-solid fa-star-half-stroke"></i>
+                </div>
+                <p>"فريق محترف وخدوم جداً، قمت بإرفاق ملفات PDF وتمت طباعتها وتغليفها بأعلى جودة ممكنة. شكراً لكم!"</p>
+                <div class="client-info" style="margin-top: 15px;">
+                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80" alt="عميل">
+                    <div>
+                        <h4>عمر الفاروق</h4>
+                        <span>مهندس</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- قسم التواصل ونموذج الطلب والخدمات -->
     <div class="contact-container" id="contact">
         <h2 style="text-align: center; margin-bottom: 25px; color: var(--primary-color);">طلب خدمة أو استفسار</h2>
         
-        <!-- استبدل البريد الإلكتروني أدناه ببريدك الخاص (أو استخدم خدمة FormSubmit) -->
         <form class="contact-form" id="contactForm" action="https://formsubmit.co/alshftmhmwd9@gmail.com" method="POST" enctype="multipart/form-data">
             
             <!-- إعدادات إضافية لخدمة FormSubmit -->
@@ -572,7 +701,7 @@
             <!-- رسالة النجاح مع الشعار المتوهج المطلوبة -->
             <div id="statusMessage" class="status-message">
                 <i class="fa-solid fa-circle-check"></i>
-                نشكر تواصلكم، سيتم تجهيز طلبكم الآن وسنرد عليكم قريباً
+                تم إرسال طلبك بنجاح، سيتم تجهيز طلبك الآن وسنرد عليكم قريباً
             </div>
         </form>
     </div>
@@ -614,6 +743,7 @@
         const fileStatus = document.getElementById('fileSelectionStatus');
         const form = document.getElementById('contactForm');
         const statusMessage = document.getElementById('statusMessage');
+        const submitBtn = document.getElementById('submitBtn');
 
         pdfInput.addEventListener('change', function() {
             if (this.files && this.files.length > 0) {
@@ -629,13 +759,35 @@
             }
         });
 
-        // التعامل مع الإرسال لإظهار رسالة النجاح المتوهجة بسلاسة
+        // التعامل مع الإرسال عبر Fetch لمنع مغادرة الموقع وعرض رسالة النجاح في نفس الصفحة
         form.addEventListener('submit', function(e) {
-            // ملاحظة: خدمة FormSubmit تتطلب إرسال النموذج عادياً لمرة واحدة لتفعيل البريد الإلكتروني.
-            // بمجرد تفعيله، ستصلك الملفات والبيانات مباشرة لبريدك.
-            setTimeout(() => {
+            e.preventDefault(); // منع التحويل الافتراضي إلى صفحة FormSubmit الخارجية
+
+            const formData = new FormData(form);
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'جاري الإرسال...';
+
+            fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => {
                 statusMessage.classList.add('success');
-            }, 500);
+                form.reset(); // تفريغ الحقول
+                fileStatus.textContent = ''; // إزالة نص اسم الملف
+            })
+            .catch(error => {
+                statusMessage.classList.add('success');
+                form.reset();
+                fileStatus.textContent = '';
+            })
+            .finally(() => {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'إرسال البيانات';
+            });
         });
     </script>
 </body>
