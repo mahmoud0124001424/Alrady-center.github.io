@@ -145,6 +145,104 @@
             color: #666;
         }
 
+        /* --- قسم الشريط الجانبي وخريطة نيالا (في المنتصف) --- */
+        .middle-info-section {
+            max-width: 1200px;
+            margin: 0 auto 50px auto;
+            padding: 0 20px;
+        }
+
+        .middle-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            align-items: stretch;
+        }
+
+        .sidebar-widget {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--secondary-color);
+        }
+
+        .sidebar-widget h3 {
+            font-size: 1.4rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sidebar-widget h3 i {
+            color: var(--secondary-color);
+        }
+
+        .sidebar-tasks-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .task-item {
+            background: var(--bg-light);
+            padding: 15px;
+            border-radius: 10px;
+            border-right: 4px solid var(--secondary-color);
+        }
+
+        .task-item h4 {
+            font-size: 1rem;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+
+        .task-item p {
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        .map-widget {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--secondary-color);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .map-widget h3 {
+            font-size: 1.4rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .map-widget h3 i {
+            color: var(--secondary-color);
+        }
+
+        .map-container {
+            flex-grow: 1;
+            width: 100%;
+            min-height: 250px;
+            background: #e2e8f0;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
         /* --- قسم قائمة الموظفين --- */
         .team-section {
             max-width: 1200px;
@@ -439,6 +537,9 @@
             .upload-options-grid {
                 grid-template-columns: 1fr;
             }
+            .middle-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -475,6 +576,41 @@
                 <i class="fa-solid fa-users-gear"></i>
                 <h3>دعم فني وتقني</h3>
                 <p>فريق محترف يعمل بكفاءة لخدمتكم</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- قسم معلومات التطبيق وخريطة نيالا في المنتصف -->
+    <div class="middle-info-section">
+        <div class="middle-grid">
+            <!-- الشريط الجانبي للمهام -->
+            <div class="sidebar-widget">
+                <h3><i class="fa-solid fa-circle-info"></i> معلومات النظام والمهام</h3>
+                <div class="sidebar-tasks-list">
+                    <div class="task-item">
+                        <h4>1. مصمم التطبيق</h4>
+                        <p>المدينة: نيالا - حي خرطوم بليل</p>
+                    </div>
+                    <div class="task-item">
+                        <h4>2. البريد الإلكتروني</h4>
+                        <p>fastfyks@gmail.com</p>
+                    </div>
+                    <div class="task-item">
+                        <h4>3. مسؤول التقنية والخدمات</h4>
+                        <p>آدم حسين<br>البريد الإلكتروني: adamhusseina195@gmail.com</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- موقعنا وخريطة نيالا -->
+            <div class="map-widget">
+                <h3><i class="fa-solid fa-map-location-dot"></i> موقعنا وخريطة نيالا</h3>
+                <div class="map-container">
+                    <!-- ضع كود خطوط الطول والعرض أو كود خريطة جوجل (iframe) هنا بدلاً من هذا التعليق -->
+                    <p style="color: #666; font-size: 0.95rem; text-align: center; padding: 20px;">
+                        [مكان مخصص لخريطة نيالا - أدخل كود خطوط الطول والعرض أو خريطة التضمين هنا]
+                    </p>
+                </div>
             </div>
         </div>
     </div>
@@ -629,14 +765,18 @@
             }
         });
 
-        // التعامل مع الإرسال لإظهار رسالة النجاح المتوهجة بسلاسة
+        // التعامل مع الإرسال لإظهار رسالة النجاح ثم إخفاؤها بعد 3 ثوانٍ
         form.addEventListener('submit', function(e) {
-            // ملاحظة: خدمة FormSubmit تتطلب إرسال النموذج عادياً لمرة واحدة لتفعيل البريد الإلكتروني.
-            // بمجرد تفعيله، ستصلك الملفات والبيانات مباشرة لبريدك.
             setTimeout(() => {
                 statusMessage.classList.add('success');
+                
+                // إخفاء رسالة النجاح تلقائياً بعد 3 ثوانٍ (3000 ملي ثانية)
+                setTimeout(() => {
+                    statusMessage.classList.remove('success');
+                }, 3000);
+
             }, 500);
         });
     </script>
 </body>
-</html>
+</html
